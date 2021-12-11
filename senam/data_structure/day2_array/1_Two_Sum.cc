@@ -20,4 +20,4 @@ public:
         }
         return (ans);
     }
-};
+}; // if you use hashmap it could be more optimal
