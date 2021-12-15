@@ -1,3 +1,6 @@
+#include <vector>
+using namespace std;
+
 class Solution {
 public :
     bool isValidSudoku(vector<vector<char>>& board) {
@@ -7,14 +10,6 @@ public :
         
         if (row != 9 || col != 9)
             return (false);
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                cout<<board[i][j] <<" ";   
-            }
-            cout<<endl;
-        }
         
         for (int i = 0; i < row; i++)
         {
@@ -27,7 +22,7 @@ public :
                     return (false);
                 if (board[i][j] != '.') hash[board[i][j]]++;
             }
-        }
+        } // check duplication on row
         for (int i = 0; i < col; i++)
         {
             memset(&hash, 0, sizeof(hash));
@@ -39,9 +34,25 @@ public :
                     return (false);
                 if (board[j][i] != '.') hash[board[j][i]]++;
             }
-        }
+        } // check duplication on column
+        for (int g = 0; g < 3; g++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                memset(&hash, 0, sizeof(hash));
+                for (int i = g * 3; i < 3 + g * 3; i++)
+                {   
+                    for (int j = k * 3; j < 3 + k * 3 ; j++)
+                    {
+                        if (!((board[i][j] >= '1' && board[i][j] <= '9') || board[i][j] == '.'))
+                            return (false); 
+                        if (hash[board[i][j]] == 1)
+                            return (false);
+                        if (board[i][j] != '.') hash[board[i][j]]++;
+                    }
+                }
+            }
+        } // check duplication of number in 3x3 subBoxes
         return (true);
     }
 };
-// 3x3 박스 안에 겹치는 숫자 없는 지 체크하는 거 추가해야함.
-// wrong answer : during progress
